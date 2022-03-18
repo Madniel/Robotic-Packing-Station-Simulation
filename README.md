@@ -17,6 +17,7 @@ Graph package create graph while simulation simulate station.
 
 Station is divided into four automates:
 ## Main graph 
+main_graph.PNG
 \Sigma = {0* 1 0* 1 1*}
 * q0 = Waiting for the start button to be pressed
 * q1 = Start of the packaging process
