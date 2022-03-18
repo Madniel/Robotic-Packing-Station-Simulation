@@ -4,19 +4,15 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
 
-
+# Create Graph
 def graph_definition():
     G = nx.MultiDiGraph()
 
     G.add_node("IDLE")
-
     G.add_edge("IDLE", "IDLE", transition='idle')
     G.add_edge("IDLE", "PACKING", transition='packing')
-    # G.add_edge("PACKING", "PICK_AND_PLACE_1", transition = 'line_1')
     G.add_edge("PACKING", "ERROR", transition='error_packing')
-    # G.add_edge("PICK_AND_PLACE_1", "PICK_AND_PLACE_2", transition = 'line_2')
     G.add_edge("PICK_AND_PLACE_1", "ERROR", transition='error_l1')
-    # G.add_edge("PICK_AND_PLACE_2", "WRAPPER", transition = 'wrapper')
     G.add_edge("PICK_AND_PLACE_2", "ERROR", transition='error_l2')
     G.add_edge("WRAPPER", "STOP", transition='stop')
     G.add_edge("STOP", "STOP", transition='check_stop')
@@ -26,11 +22,9 @@ def graph_definition():
     G.add_edge("STOP", "IDLE", transition='restart')
 
     G.add_edge("PACKING", "P1", transition='idle_packing')
-    # G.add_edge("P1", "P2", transition = 'p1p2')
     G.add_edge("P1", "ERROR_PACKING", transition='p1_error')
     G.add_edge("P2", "P3", transition='p2p3')
     G.add_edge("P2", "ERROR_PACKING", transition='p2_error')
-    # G.add_edge("P3", "P4", transition = 'p3p4')
     G.add_edge("P3", "ERROR_PACKING", transition='p3_error')
     G.add_edge("P4", "P5", transition='p4p5')
     G.add_edge("P4", "ERROR_PACKING", transition='p4_error')
@@ -45,7 +39,6 @@ def graph_definition():
     G.add_node("PICK_AND_PLACE_2")
     G.add_edge("PICK_AND_PLACE_2", "L1", transition='idle_line')
     G.add_edge("PICK_AND_PLACE_1", "L1", transition='idle_line')
-    # G.add_edge("L1", "L2", transition = 'l1l2')
     G.add_edge("L1", "ERROR_L", transition='l1_error')
     G.add_edge("L2", "L3", transition='l2l3')
     G.add_edge("L2", "ERROR_L", transition='l2_error')
@@ -82,21 +75,20 @@ def graph_definition():
     G.add_edge("RESTART_ROBOT", "R1", transition='rest_r1')
     G.add_edge("RESTART_ROBOT", "RESTART_ROBOT", transition='restart')
 
-    #print("Nodes:")
-    #print(G.nodes)
     return G
 
 Graph = graph_definition()
 
+# Search for deadlocks
 def search():
-    global list
+    global graphs
     blockades = False
-    list = list(Graph)
+    graphs = graphs(Graph)
 
-    for i in range(len(list)):
-        for j in range(len(list)):
-            source = list[i]
-            target = list[j]
+    for i in range(len(graphs)):
+        for j in range(len(graphs)):
+            source = graphs[i]
+            target = graphs[j]
             is_path = nx.has_path(Graph, source=source, target=target)
             if not is_path:
                 print("Graph contains blockades")
@@ -105,7 +97,7 @@ def search():
     if not blockades:
         print("Graph doesn't contain blockades")
 
-
+# Display graph
 def display():
     Graph.graph['edge'] = {'arrowsize': '0.6', 'splines': 'curved'}
     Graph.graph['graph'] = {'scale': '4'}

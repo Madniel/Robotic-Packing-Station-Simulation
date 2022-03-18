@@ -1,11 +1,11 @@
-from automaty.packing_slave import *
-from automaty.line_1 import *
-from automaty.line_2 import *
-from automaty.robot import *
-from automaty.master import *
-from klasy.generator import *
+from automates.packing_slave import *
+from automates.line_1 import *
+from automates.line_2 import *
+from automates.robot import *
+from automates.master import *
+from classes.generator import *
 from grafy.graph import *
-from symulacja.Simulation import *
+from simulations.Simulation import *
 
 import argparse
 import robopy.base.model as robot

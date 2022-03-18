@@ -16,7 +16,6 @@ packing_options = [
 # ** -> unpack dict to args
 packing_states = [State(**opt) for opt in packing_options]
 
-
 # valid transitions for a master (indices of states from-to)
 packing_form_to = [
     [0, [0, 1]],

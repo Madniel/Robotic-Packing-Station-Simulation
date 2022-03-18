@@ -1,5 +1,4 @@
 import numpy as np
-import time
 
 from robopy.base import pose
 from robopy.base import transforms

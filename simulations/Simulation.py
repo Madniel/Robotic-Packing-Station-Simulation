@@ -1,11 +1,10 @@
 import numpy as np
 
-from symulacja.commands.moves import  move_j
+from simulations.commands.moves import move_j
 
 def position(number, steps):
 
     if number == 0:
-
         print("q_0 = Oczekiwanie na sygnał startu z sterownika")
         initialize = [ 90.0, 90.0, 0.0, 0.0, 0.0, 0.0 ]
         return initialize
@@ -52,7 +51,7 @@ def position(number, steps):
 
 def run(steps,robot):
 
-    moves=[]
+    moves = []
 
     for i in range(len(steps)):
         if i == len(steps) - 1:
@@ -61,13 +60,13 @@ def run(steps,robot):
             move = move_j(robot, steps[i], steps[i + 1])
         moves.append(move)
 
-    Path = moves[0]
+    path = moves[0]
 
     for i in range(len(moves)-1):
-        Path = np.concatenate((Path, moves[i+1]), axis=0)
+        path = np.concatenate((path, moves[i + 1]), axis=0)
 
     # animate robot
-    robot.animate(stances=Path, frame_rate=30, unit='deg')
+    robot.animate(stances=path, frame_rate=30, unit='deg')
 
 
 
